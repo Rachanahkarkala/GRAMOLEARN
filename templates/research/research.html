@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}
+Research
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/research.css') }}">
+
+<div class="research-page">
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+    <div class="carousel">
+
+        <div class="ring">
+
+            <img src="{{ url_for('static', filename='images/animals/lion.png') }}" class="a1">
+
+            <img src="{{ url_for('static', filename='images/animals/tiger.png') }}" class="a2">
+
+            <img src="{{ url_for('static', filename='images/animals/elephant.png') }}" class="a3">
+
+            <img src="{{ url_for('static', filename='images/animals/giraffe.png') }}" class="a4">
+
+            <img src="{{ url_for('static', filename='images/animals/panda.png') }}" class="a5">
+
+            <img src="{{ url_for('static', filename='images/animals/penguin.png') }}" class="a6">
+
+            <img src="{{ url_for('static', filename='images/animals/shark.png') }}" class="a7">
+
+            <img src="{{ url_for('static', filename='images/animals/owl.png') }}" class="a8">
+
+        </div>
+
+        <div class="center-text">
+
+            🌿
+
+            <h2>Explore</h2>
+
+            <h3>The Animal Kingdom</h3>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    </div>
+
+    <!-- SEARCH -->
+
+    <div class="hero">
+
+    <!-- carousel -->
+
+    <div class="carousel">
+
+    </div>
+
+    <!-- heading -->
+
+    <div class="hero-text">
+
+        <h1>
+
+            Expand Your Knowledge
+            <br>
+
+            of the Animal Kingdom 🌿
+
+        </h1>
+
+        <p>
+
+            Search any animal and learn everything about it.
+
+        </p>
+
+    </div>
+
+    <!-- search -->
+
+    <div class="search-box">
+
+        <input
+        id="animalSearch"
+        type="text"
+        placeholder="Search an animal...">
+
+        <button id="searchBtn">
+
+            🔍 Search
+
+        </button>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div id="resultCard">
+
+    </div>
+
+</div>
+
+<!-- CHATBOT -->
+
+<div class="gramo-chat">
+
+    <div class="gramo-btn">
+
+        🦉
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/research.js') }}"></script>
+
+{% endblock %}

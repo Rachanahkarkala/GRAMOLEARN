@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Colouring{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/painting.css') }}">
+<div class="paint-container">
+
+    <!-- TOP -->
+    <div class="palette">
+
+        <div class="color active" style="background:#ff0000;" data-color="#ff0000"></div>
+        <div class="color" style="background:#ff7f00;" data-color="#ff7f00"></div>
+        <div class="color" style="background:#ffff00;" data-color="#ffff00"></div>
+        <div class="color" style="background:#00cc00;" data-color="#00cc00"></div>
+        <div class="color" style="background:#0099ff;" data-color="#0099ff"></div>
+        <div class="color" style="background:#7d3cff;" data-color="#7d3cff"></div>
+        <div class="color" style="background:#8B4513;" data-color="#8B4513"></div>
+        <div class="color" style="background:#000000;" data-color="#000000"></div>
+
+    </div>
+
+    <div class="workspace">
+
+        <!-- LEFT -->
+
+        <div class="canvas-box">
+
+            <canvas id="drawingCanvas" width="700" height="700"></canvas>
+
+            <div class="bottom-buttons">
+
+                <button id="resetBtn">Reset</button>
+
+                <button id="downloadBtn">Download</button>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="reference-box">
+
+            <h2>Reference Image</h2>
+
+            <img
+            src="{{ url_for('static', filename='images/colouring/animals/reference/giraffe.png') }}"
+            id="referenceImage">
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/colouring_canvas.js') }}"></script>
+
+{% endblock %}

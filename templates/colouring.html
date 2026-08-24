@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Colouring{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/colouring.css') }}">
+
+<div class="colouring-container">
+
+    <h1>Choose a Category</h1>
+
+    <p>Select your favourite wildlife category to begin colouring.</p>
+
+    <div class="category-grid">
+
+        <a href="/colouring/animals" class="category-card">
+            <div class="emoji">🦁</div>
+            <h2>Animals</h2>
+        </a>
+
+        <a href="/colouring/birds" class="category-card">
+            <div class="emoji">🦅</div>
+            <h2>Birds</h2>
+        </a>
+
+        <a href="/colouring/reptiles" class="category-card">
+            <div class="emoji">🐍</div>
+            <h2>Reptiles</h2>
+        </a>
+
+        <a href="/colouring/amphibians" class="category-card">
+            <div class="emoji">🐸</div>
+            <h2>Amphibians</h2>
+        </a>
+
+        <a href="/colouring/dinosaurs" class="category-card">
+            <div class="emoji">🦖</div>
+            <h2>Dinosaurs</h2>
+        </a>
+
+        <a href="/colouring/marine" class="category-card">
+            <div class="emoji">🐬</div>
+            <h2>Marine Animals</h2>
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

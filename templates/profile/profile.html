@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/profile.css') }}">
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <img
+        class="profile-img"
+        src="{{ url_for('static', filename='uploads/' + user.profile_pic) }}">
+
+        <h1>{{ user.username }}</h1>
+
+        <p>{{ user.email }}</p>
+
+        <div class="score-box">
+
+            <h2>🏆 Best Score</h2>
+
+            <span>{{ user.score }}</span>
+
+        </div>
+
+        <hr>
+
+        <h3>Change Username</h3>
+
+        <form action="/update_username" method="POST">
+
+            <input
+            type="text"
+            name="username"
+            placeholder="New Username"
+            required>
+
+            <button>
+
+                Update Username
+
+            </button>
+
+        </form>
+
+        <hr>
+
+        <h3>Change Profile Picture</h3>
+
+        <form action="/upload_profile" method="POST" enctype="multipart/form-data">
+
+            <input
+            type="file"
+            name="profile_pic"
+            accept="image/*"
+            required>
+
+            <button>
+
+                Upload Picture
+
+            </button>
+
+        </form>
+
+        <br>
+
+        <a href="/logout">
+
+            <button class="logout">
+
+                Logout
+
+            </button>
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

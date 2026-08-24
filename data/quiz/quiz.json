@@ -1,0 +1,225 @@
+[
+    {
+        "type":"mcq",
+
+        "round":1,
+
+        "question":"Which animal is called the King of the Jungle?",
+
+        "options":[
+
+            "Lion",
+
+            "Tiger",
+
+            "Elephant",
+
+            "Bear"
+
+        ],
+
+        "answer":"Lion"
+    },
+
+    {
+
+        "type":"mcq",
+
+        "round":1,
+
+        "question":"Which bird cannot fly?",
+
+        "options":[
+
+            "Penguin",
+
+            "Crow",
+
+            "Parrot",
+
+            "Eagle"
+
+        ],
+
+        "answer":"Penguin"
+    },
+    {
+
+        "type":"mcq",
+
+        "round":1,
+
+        "question":"Which animal is white?",
+
+        "options":[
+
+            "Polar Bear",
+
+            "Crow",
+
+            "Parrot",
+
+            "Eagle"
+
+        ],
+
+        "answer":"Polar Bear"
+    },
+    {
+
+        "type":"mcq",
+
+        "round":1,
+
+        "question":"Which animal is a carnivore?",
+
+        "options":[
+
+            "Penguin",
+
+            "Crow",
+
+            "Parrot",
+
+            "Lion"
+
+        ],
+
+        "answer":"Lion"
+    },
+    {
+
+        "type":"mcq",
+
+        "round":1,
+
+        "question":"Which bird cannot fly?",
+
+        "options":[
+
+            "Penguin",
+
+            "Crow",
+
+            "Parrot",
+
+            "Eagle"
+
+        ],
+
+        "answer":"Penguin"
+    },
+
+    {
+
+        "type":"tf",
+
+        "round":2,
+
+        "question":"Penguins can fly.",
+
+        "answer":"false"
+
+    },
+    {
+
+        "type":"tf",
+
+        "round":2,
+
+        "question":"Eagles and hawks are the same.",
+
+        "answer":"false"
+
+    },
+    {
+
+        "type":"tf",
+
+        "round":2,
+
+        "question":"Snakes cant camouflage",
+
+        "answer":"false"
+
+    },
+    {
+
+        "type":"tf",
+
+        "round":2,
+
+        "question":"Lions are the only cats that live in groups.",
+
+        "answer":"false"
+
+    },
+    {
+
+        "type":"tf",
+
+        "round":2,
+
+        "question":"Penguins can fly.",
+
+        "answer":"false"
+
+    },
+
+    {
+
+        "type":"fill",
+
+        "round":3,
+
+        "question":"The tallest animal is _______.",
+
+        "answer":"Giraffe"
+
+    },
+    {
+
+        "type":"fill",
+
+        "round":3,
+
+        "question":"The smallest bird is _______.",
+
+        "answer":"Hummingbird"
+
+    },
+    {
+
+        "type":"fill",
+
+        "round":3,
+
+        "question":"The fastest animal is _______.",
+
+        "answer":"Cheetah"
+
+    },
+    {
+
+        "type":"fill",
+
+        "round":3,
+
+        "question":"The slowest animal is _______.",
+
+        "answer":"Tortoise"
+
+    },
+    {
+
+        "type":"fill",
+
+        "round":3,
+
+        "question":"The tallest animal is _______.",
+
+        "answer":"Giraffe"
+
+    }
+
+]

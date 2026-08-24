@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/leaderboard.css') }}">
+
+<div class="leaderboard-container">
+
+    <h1>🏆 Wildlife Leaderboard</h1>
+
+    <p class="subtitle">
+        Compete with explorers from around the world!
+    </p>
+
+    <div class="leaderboard-table">
+
+        <div class="table-head">
+
+            <span>Rank</span>
+
+            <span>Player</span>
+
+            <span>Best Score</span>
+
+        </div>
+
+        {% for user in users %}
+
+        <div class="table-row">
+
+            <span>
+
+                {% if loop.index==1 %}
+                🥇
+                {% elif loop.index==2 %}
+                🥈
+                {% elif loop.index==3 %}
+                🥉
+                {% else %}
+                #{{loop.index}}
+                {% endif %}
+
+            </span>
+
+            <span class="player">
+
+                <img
+                src="{{ url_for('static', filename='uploads/' + user.profile_pic) }}"
+                class="avatar">
+
+                {{user.username}}
+
+            </span>
+
+            <span>{{user.score}}</span>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

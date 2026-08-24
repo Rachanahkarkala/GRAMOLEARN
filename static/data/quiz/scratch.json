@@ -1,0 +1,31 @@
+[
+  {
+    "question":"The tallest land animal is?",
+    "answer":"giraffe",
+    "image":"giraffe.png"
+  },
+
+  {
+    "question":"Largest land mammal?",
+    "answer":"elephant",
+    "image":"elephant.png"
+  },
+
+  {
+    "question":"King of the Jungle?",
+    "answer":"lion",
+    "image":"lion.png"
+  },
+
+  {
+    "question":"Fastest land animal?",
+    "answer":"cheetah",
+    "image":"cheetah.png"
+  },
+
+  {
+    "question":"Black and white striped animal?",
+    "answer":"zebra",
+    "image":"zebra.png"
+  }
+]

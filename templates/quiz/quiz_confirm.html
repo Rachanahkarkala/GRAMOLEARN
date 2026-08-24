@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Confirm
+
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='css/quiz_home.css') }}">
+
+<div class="confirm-box">
+
+<h1>
+
+{{difficulty|title}}
+
+Difficulty
+
+</h1>
+
+<p>
+
+Once you press
+
+START
+
+the timer begins immediately.
+
+</p>
+
+<div class="confirm-buttons">
+
+<a href="/quiz/start">
+
+<button>
+
+YES
+
+</button>
+
+</a>
+
+<a href="/quiz">
+
+<button>
+
+NO
+
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+{% endblock %}

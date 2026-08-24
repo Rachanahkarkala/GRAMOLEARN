@@ -1,0 +1,642 @@
+
+
+
+
+
+
+
+
+
+{% extends "base.html" %}
+
+{% block title %}Gramolearn - Home{% endblock %}
+
+{% block content %}
+<!-- Background Effects -->
+<div class="background">
+    <div class="gradient"></div>
+    <div class="stars"></div>
+    <div class="fog"></div>
+    
+    <!-- Floating Particles -->
+    <div id="particles"></div>
+    
+    <!-- 3D Forest Elements -->
+    <div class="forest-scene">
+        <div class="tree tree-1"></div>
+        <div class="tree tree-2"></div>
+        <div class="tree tree-3"></div>
+        <div class="tree tree-4"></div>
+        <div class="tree tree-5"></div>
+        <div class="tree tree-6"></div>
+        <div class="tree tree-7"></div>
+        <div class="tree tree-8"></div>
+    </div>
+    
+    <!-- Animated Leaves -->
+    <div id="leaves"></div>
+    
+    <!-- Fireflies -->
+    <div class="firefly" style="top:15%;left:10%;animation-delay:0s;animation-duration:3s;"></div>
+    <div class="firefly" style="top:25%;left:80%;animation-delay:1s;animation-duration:2.5s;"></div>
+    <div class="firefly" style="top:55%;left:20%;animation-delay:2s;animation-duration:4s;"></div>
+    <div class="firefly" style="top:70%;left:75%;animation-delay:0.5s;animation-duration:3.5s;"></div>
+    <div class="firefly" style="top:40%;left:50%;animation-delay:1.5s;animation-duration:2.8s;"></div>
+    <div class="firefly" style="top:85%;left:40%;animation-delay:2.5s;animation-duration:3.2s;"></div>
+    <div class="firefly" style="top:10%;left:45%;animation-delay:0.8s;animation-duration:4.2s;"></div>
+    <div class="firefly" style="top:90%;left:60%;animation-delay:1.8s;animation-duration:2.3s;"></div>
+</div>
+
+<!-- Main Content -->
+<div class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">
+            <span class="text-gradient">Gramolearn</span>
+            <span class="hero-subtitle">Forest of Knowledge</span>
+        </h1>
+        <p class="hero-description">
+            Explore, learn, and grow in our enchanted forest of knowledge. 
+            Every step brings you closer to mastering the wonders of nature.
+        </p>
+        
+        <div class="hero-buttons">
+            
+            <a href="{{ url_for('research') }}" class="btn btn-secondary">
+                <span>🔍 Explore</span>
+            </a>
+        </div>
+        
+        <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number" data-target="150">0</span>
+                <span class="stat-label">Animals</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="50">0</span>
+                <span class="stat-label">Quizzes</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="1000">0</span>
+                <span class="stat-label">Learners</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Feature Cards -->
+<div class="features-section">
+    <h2 class="section-title">🌳 Explore Our Forest</h2>
+    <div class="features-grid">
+        <div class="feature-card" data-aos="fade-up">
+            <div class="feature-icon">📚</div>
+            <h3>Research</h3>
+            <p>Discover fascinating facts about animals and nature</p>
+            <a href="{{ url_for('research') }}" class="feature-link">Explore →</a>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-icon">🎨</div>
+            <h3>Colouring</h3>
+            <p>Bring forest creatures to life with colors</p>
+            <a href="{{ url_for('colouring') }}" class="feature-link">Explore →</a>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="feature-icon">🧠</div>
+            <h3>Quiz</h3>
+            <p>Test your knowledge with fun challenges</p>
+            <a href="{{ url_for('quiz') }}" class="feature-link">Explore →</a>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-icon">💡</div>
+            <h3>Did You Know</h3>
+            <p>Amazing facts you never knew about nature</p>
+            <a href="{{ url_for('didyouknow') }}" class="feature-link">Explore →</a>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Create floating particles
+    createParticles();
+    createLeaves();
+    animateNumbers();
+});
+
+function createParticles() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const size = Math.random() * 4 + 2;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particle.style.animationDelay = (Math.random() * 5) + 's';
+        container.appendChild(particle);
+    }
+}
+
+function createLeaves() {
+    const container = document.getElementById('leaves');
+    const leafEmojis = ['🍃', '🌿', '🍂', '🌱', '☘️'];
+    for (let i = 0; i < 15; i++) {
+        const leaf = document.createElement('div');
+        leaf.className = 'leaf';
+        leaf.textContent = leafEmojis[Math.floor(Math.random() * leafEmojis.length)];
+        leaf.style.left = Math.random() * 100 + '%';
+        leaf.style.top = Math.random() * 100 + '%';
+        leaf.style.fontSize = (Math.random() * 20 + 15) + 'px';
+        leaf.style.animationDuration = (Math.random() * 15 + 15) + 's';
+        leaf.style.animationDelay = (Math.random() * 10) + 's';
+        container.appendChild(leaf);
+    }
+}
+
+function animateNumbers() {
+    const numbers = document.querySelectorAll('.stat-number');
+    numbers.forEach(num => {
+        const target = parseInt(num.getAttribute('data-target'));
+        const increment = target / 50;
+        let current = 0;
+        
+        const updateNumber = () => {
+            current += increment;
+            if (current < target) {
+                num.textContent = Math.floor(current) + '+';
+                requestAnimationFrame(updateNumber);
+            } else {
+                num.textContent = target + '+';
+            }
+        };
+        
+        // Start animation when element is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    updateNumber();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+        observer.observe(num);
+    });
+}
+
+// Smooth scroll for feature cards
+document.querySelectorAll('.feature-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        window.location.href = href;
+    });
+});
+</script>
+
+<style>
+/* Hero Section Enhanced */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px 50px;
+    z-index: 1;
+}
+
+.hero-content {
+    max-width: 800px;
+    text-align: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(154, 230, 110, 0.15);
+    border: 1px solid rgba(154, 230, 110, 0.3);
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    color: #9AE66E;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.hero-title {
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 10px;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, #D7F5C7, #9AE66E, #4CAF50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.hero-subtitle {
+    display: block;
+    font-size: 2rem;
+    font-weight: 300;
+    color: rgba(215, 245, 199, 0.7);
+    -webkit-text-fill-color: rgba(215, 245, 199, 0.7);
+    margin-top: 5px;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 600px;
+    margin: 20px auto 40px;
+    line-height: 1.8;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+}
+
+.btn {
+    padding: 16px 40px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #2E7D32);
+    color: white;
+    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(76, 175, 80, 0.5);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+/* Hero Stats */
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #9AE66E;
+    animation: countUp 2s ease-out;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-divider {
+    width: 2px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Features Section */
+.features-section {
+    padding: 80px 20px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent, rgba(7, 20, 13, 0.8));
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    color: #D7F5C7;
+    margin-bottom: 50px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(76, 175, 80, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.feature-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.feature-card h3 {
+    color: #D7F5C7;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.feature-card p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.feature-link {
+    color: #9AE66E;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.feature-link:hover {
+    gap: 10px;
+    color: #D7F5C7;
+}
+
+/* 3D Trees */
+.forest-scene {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.tree {
+    position: absolute;
+    bottom: 0;
+    transform-style: preserve-3d;
+    animation: sway 4s ease-in-out infinite;
+}
+
+.tree::before {
+    content: '🌲';
+    font-size: 80px;
+    display: block;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+.tree-1 { left: 5%; animation-delay: 0s; font-size: 90px; }
+.tree-2 { left: 15%; animation-delay: 0.5s; font-size: 70px; }
+.tree-3 { left: 25%; animation-delay: 1s; font-size: 100px; }
+.tree-4 { left: 40%; animation-delay: 0.2s; font-size: 80px; }
+.tree-5 { left: 55%; animation-delay: 0.8s; font-size: 95px; }
+.tree-6 { left: 70%; animation-delay: 0.3s; font-size: 75px; }
+.tree-7 { left: 85%; animation-delay: 0.7s; font-size: 85px; }
+.tree-8 { left: 95%; animation-delay: 0.4s; font-size: 70px; }
+
+/* Floating Particles */
+.particle {
+    position: absolute;
+    background: rgba(154, 230, 110, 0.3);
+    border-radius: 50%;
+    animation: floatParticle linear infinite;
+}
+
+/* Leaves */
+.leaf {
+    position: absolute;
+    animation: floatLeaf linear infinite;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes sway {
+    0%, 100% {
+        transform: rotate(-2deg);
+    }
+    50% {
+        transform: rotate(2deg);
+    }
+}
+
+@keyframes floatParticle {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(50px);
+        opacity: 0;
+    }
+}
+
+@keyframes floatLeaf {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .stat-divider {
+        width: 80%;
+        height: 2px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .tree::before {
+        font-size: 50px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .btn {
+        padding: 14px 30px;
+        font-size: 1rem;
+    }
+    
+    .feature-card {
+        padding: 30px 20px;
+    }
+}
+</style>
+{% endblock %}

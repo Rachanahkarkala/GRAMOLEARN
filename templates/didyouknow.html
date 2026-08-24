@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Did You Know
+
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='css/didyouknow.css') }}">
+
+<div class="facts-page">
+
+<h1>Did You Know?</h1>
+
+<p>Tap the card to discover amazing wildlife facts!</p>
+
+<div class="fact-card" id="factCard">
+
+<img id="animalImage">
+
+<h2 id="animalName"></h2>
+
+<p id="animalFact"></p>
+
+<div class="progress">
+
+<span id="factNumber"></span>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="{{ url_for('static',filename='js/facts.js') }}"></script>
+
+<script src="{{ url_for('static',filename='js/didyouknow.js') }}"></script>
+
+{% endblock %}

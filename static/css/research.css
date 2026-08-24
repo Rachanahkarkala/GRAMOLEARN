@@ -1,0 +1,220 @@
+#resultCard {
+    margin-top: 50px;
+}
+
+.animalCard {
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .08);
+    backdrop-filter: blur(20px);
+    color: white;
+    line-height: 1.8;
+    animation: fade .6s;
+}
+
+.animalCard h1 {
+    color: #c9ff89;
+    margin-bottom: 20px;
+}
+
+.animalCard a {
+    color: #7CFC00;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+@keyframes fade {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 70px;
+    text-align: center;
+}
+
+/* ===== ENLARGED & AESTHETIC CAROUSEL ===== */
+.carousel {
+    position: relative;
+    width: 850px;
+    /* enlarged from 750px */
+    height: 850px;
+    /* enlarged from 750px */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1300px;
+    margin: 0 auto;
+}
+
+.ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: spin 28s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+    will-change: transform;
+}
+
+.ring img {
+    position: absolute;
+    width: 190px;
+    /* enlarged from 150px */
+    height: 190px;
+    /* enlarged from 150px */
+    object-fit: contain;
+    left: 50%;
+    top: 50%;
+    margin-left: -95px;
+    /* half of new width */
+    margin-top: -95px;
+    /* half of new height */
+    border-radius: 28px;
+    background: rgba(30, 40, 30, 0.15);
+    backdrop-filter: blur(2px);
+    padding: 6px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    filter: drop-shadow(0 0 25px rgba(160, 255, 160, 0.25)) brightness(1.05) saturate(1.1);
+    will-change: transform;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ring img:hover {
+    transform: scale(1.35) translateZ(30px);
+    filter: drop-shadow(0 0 50px rgba(180, 255, 160, 0.6)) brightness(1.15);
+    border-color: rgba(200, 255, 180, 0.4);
+    z-index: 999;
+}
+
+/* wider radius for more 3D depth */
+.a1 {
+    transform: rotateY(0deg) translateZ(380px);
+}
+.a2 {
+    transform: rotateY(45deg) translateZ(380px);
+}
+.a3 {
+    transform: rotateY(90deg) translateZ(380px);
+}
+.a4 {
+    transform: rotateY(135deg) translateZ(380px);
+}
+.a5 {
+    transform: rotateY(180deg) translateZ(380px);
+}
+.a6 {
+    transform: rotateY(225deg) translateZ(380px);
+}
+.a7 {
+    transform: rotateY(270deg) translateZ(380px);
+}
+.a8 {
+    transform: rotateY(315deg) translateZ(380px);
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    margin-bottom: 80px;
+}
+
+.search-box input {
+    width: 700px;
+    height: 70px;
+    padding: 0 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 22px;
+    outline: none;
+    background: white;
+}
+
+.search-box button {
+    height: 70px;
+    padding: 0 35px;
+    border: none;
+    border-radius: 50px;
+    font-size: 22px;
+    background: #72df49;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .3s;
+}
+
+.search-box button:hover {
+    transform: scale(1.05);
+}
+
+.hero-text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.hero-text h1 {
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #d8ffb1;
+    max-width: 1100px;
+    margin: 0 auto 25px;
+}
+
+.hero-text p {
+    font-size: 28px;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.center-text {
+    width: 330px;
+    height: 330px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .08);
+    backdrop-filter: blur(25px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 0 40px rgba(120, 255, 120, .25);
+}
+
+.center-text h2 {
+    font-size: 38px;
+    margin: 10px 0 0;
+    color: #d9ffb8;
+}
+
+.center-text h3 {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(360deg);
+    }
+}

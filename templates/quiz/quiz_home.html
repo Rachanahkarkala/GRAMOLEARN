@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+Quiz
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static',filename='css/quiz_home.css') }}">
+
+<div class="quiz-home">
+
+<h1>
+
+🦁
+
+Gramolearn Wildlife Quiz
+
+</h1>
+
+<p>
+
+Choose your difficulty
+
+</p>
+
+<div class="difficulty-grid">
+
+<a href="/quiz/easy" class="difficulty easy">
+
+<h2>Easy</h2>
+
+<p>30 Minutes</p>
+
+</a>
+
+<a href="/quiz/medium" class="difficulty medium">
+
+<h2>Medium</h2>
+
+<p>20 Minutes</p>
+
+</a>
+
+<a href="/quiz/hard" class="difficulty hard">
+
+<h2>Hard</h2>
+
+<p>15 Minutes</p>
+
+</a>
+
+</div>
+
+</div>
+
+{% endblock %}

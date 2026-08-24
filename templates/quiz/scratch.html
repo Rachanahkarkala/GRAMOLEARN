@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Scratch Card{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/scratch.css') }}">
+
+<div class="scratch-page">
+
+    <h1>🎴 Round 4 - Scratch & Answer</h1>
+
+    <p class="subtitle">
+
+        Choose one mystery card!
+
+    </p>
+
+    <div id="cardSelection" class="card-grid">
+
+        <div class="mystery-card" data-card="1">?</div>
+
+        <div class="mystery-card" data-card="2">?</div>
+
+        <div class="mystery-card" data-card="3">?</div>
+
+        <div class="mystery-card" data-card="4">?</div>
+
+    </div>
+
+    <div id="questionSection" style="display:none;">
+
+        <h2 id="questionText"></h2>
+
+        <input
+        id="answerInput"
+        type="text"
+        placeholder="Type your answer...">
+
+        <button id="submitAnswer">
+
+            Submit
+
+        </button>
+
+    </div>
+
+    <div id="scratchSection" style="display:none;">
+
+        <div class="scratch-container">
+
+            <img
+            id="animalImage"
+            src="">
+
+            <canvas
+            id="scratchCanvas"
+            width="500"
+            height="500">
+            </canvas>
+
+        </div>
+
+        <button id="nextQuestion">
+
+            Next Question →
+
+        </button>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/scratch.js') }}"></script>
+
+{% endblock %}

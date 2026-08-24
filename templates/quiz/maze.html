@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Animal Maze{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/maze.css') }}">
+
+<div class="maze-page">
+
+    <h1>🐾 Round 5 — Animal Maze</h1>
+
+    <p class="maze-subtitle">
+        Help the animal find its way home!
+    </p>
+
+    <div class="maze-progress">
+        Maze <span id="mazeNumber">1</span> / 5
+    </div>
+
+    <div class="question-box">
+
+        <h2 id="mazeQuestion">
+            Loading maze...
+        </h2>
+
+    </div>
+
+    <div class="game-area">
+
+        <canvas
+            id="mazeCanvas"
+            width="600"
+            height="600">
+        </canvas>
+
+    </div>
+
+    <div class="controls">
+
+        <p>
+            Use <b>Arrow Keys</b> or <b>W A S D</b>
+            to move
+        </p>
+
+    </div>
+
+    <div id="mazeMessage"></div>
+
+    <button id="nextMaze" style="display:none;">
+        Next Maze →
+    </button>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/maze.js') }}"></script>
+
+{% endblock %}

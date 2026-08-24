@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Animals{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/animal_selection.css') }}">
+
+<div class="animal-container">
+
+<h1>Choose Your Animal</h1>
+
+<p>Select an animal to start colouring.</p>
+
+<div class="animal-grid">
+
+<a href="/paint/giraffe" class="animal-card">
+
+<div class="emoji">🦒</div>
+
+<h2>Giraffe</h2>
+
+</a>
+
+<a href="/paint/lion" class="animal-card">
+
+<div class="emoji">🦁</div>
+
+<h2>Lion</h2>
+
+</a>
+
+<a href="/paint/elephant" class="animal-card">
+
+<div class="emoji">🐘</div>
+
+<h2>Elephant</h2>
+
+</a>
+
+<a href="/paint/tiger" class="animal-card">
+
+<div class="emoji">🐅</div>
+
+<h2>Tiger</h2>
+
+</a>
+
+<a href="/paint/zebra" class="animal-card">
+
+<div class="emoji">🦓</div>
+
+<h2>Zebra</h2>
+
+</a>
+
+</div>
+
+</div>
+
+{% endblock %}

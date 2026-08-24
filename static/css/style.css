@@ -1,0 +1,417 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Poppins,sans-serif;
+
+    background:#0b2a17;
+
+    color:white;
+
+    overflow-x:hidden;
+
+}
+
+/* NAVBAR */
+
+nav{
+
+    width:100%;
+
+    height:80px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 70px;
+
+    position:fixed;
+
+    top:0;
+
+    z-index:1000;
+
+    background:rgba(7,20,13,.45);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.logo{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:#D7F5C7;
+
+    letter-spacing:2px;
+
+}
+
+nav ul{
+
+    display:flex;
+
+    list-style:none;
+
+    gap:35px;
+
+}
+
+nav a{
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    color:#9AE66E;
+
+}
+
+/* HERO */
+
+.hero{
+
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+
+}
+
+.hero h1{
+
+    font-size:6rem;
+
+    color:#D7F5C7;
+
+    margin-bottom:20px;
+
+}
+
+.hero p{
+
+    font-size:1.3rem;
+
+    opacity:.8;
+
+}
+/* ===========================
+BACKGROUND
+=========================== */
+
+.background{
+
+position:fixed;
+
+width:100%;
+
+height:100%;
+
+overflow:hidden;
+
+top:0;
+
+left:0;
+
+z-index:-10;
+
+}
+
+.gradient{
+
+position:absolute;
+
+width:100%;
+
+height:100%;
+
+background:
+
+radial-gradient(circle at top,#29593D 0%,#102418 40%,#07140D 100%);
+
+}
+
+/* STARS */
+
+.stars{
+
+position:absolute;
+
+width:200%;
+
+height:200%;
+
+background-image:
+
+radial-gradient(#ffffff55 1px, transparent 1px);
+
+background-size:70px 70px;
+
+animation:moveStars 60s linear infinite;
+
+opacity:.35;
+
+}
+
+/* FOG */
+
+.fog{
+
+position:absolute;
+
+width:250%;
+
+height:250%;
+
+background:
+
+radial-gradient(circle,#ffffff08 0%,transparent 70%);
+
+filter:blur(90px);
+
+animation:fogMove 30s ease-in-out infinite;
+
+}
+
+/* ANIMATIONS */
+
+@keyframes moveStars{
+
+from{
+
+transform:translateY(0);
+
+}
+
+to{
+
+transform:translateY(-250px);
+
+}
+
+}
+
+@keyframes fogMove{
+
+0%{
+
+transform:translateX(-15%);
+
+}
+
+50%{
+
+transform:translateX(0);
+
+}
+
+100%{
+
+transform:translateX(-15%);
+
+}
+
+}
+/* ===========================
+   FIRELIES
+=========================== */
+
+.firefly{
+
+    position:absolute;
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:radial-gradient(circle,#fff9c4,#ffd54f,#ffca28);
+
+    box-shadow:
+        0 0 8px #ffd54f,
+        0 0 18px #ffd54f,
+        0 0 35px #ffeb3b;
+
+    animation:
+        glow 2s ease-in-out infinite alternate;
+
+}
+
+/* Individual paths */
+
+
+
+/* Glow */
+
+@keyframes glow{
+
+    from{
+
+        opacity:.35;
+
+        transform:scale(.9);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1.35);
+
+    }
+
+}
+
+/* Paths */
+
+
+
+
+
+
+
+/* test heheheheh */
+/* Add these to your existing style.css */
+
+/* Enhanced Hero Background */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px 50px;
+    z-index: 1;
+}
+
+/* Particle container */
+#particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Leaves container */
+#leaves {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* Fireflies - enhanced glow */
+.firefly {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff9c4, #ffd54f, #ffca28);
+    box-shadow: 0 0 10px #ffd54f, 0 0 20px #ffd54f, 0 0 40px #ffeb3b, 0 0 80px rgba(255, 213, 79, 0.3);
+    animation: glow 2s ease-in-out infinite alternate;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Enhanced tree styling */
+.tree {
+    position: absolute;
+    bottom: 0;
+    transform-style: preserve-3d;
+    animation: sway 4s ease-in-out infinite;
+    z-index: 0;
+}
+
+.tree::before {
+    content: '🌲';
+    display: block;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+    transition: transform 0.3s ease;
+}
+
+.tree:hover::before {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+/* Background gradient enhancement */
+.gradient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, #1a472a 0%, #0b2a17 40%, #07140d 100%);
+}
+
+/* Stars animation - enhanced */
+.stars {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: 
+        radial-gradient(#ffffff55 1px, transparent 1px),
+        radial-gradient(#ffffff33 2px, transparent 2px);
+    background-size: 70px 70px, 150px 150px;
+    animation: moveStars 80s linear infinite;
+    opacity: 0.4;
+}
+
+/* Fog animation - enhanced */
+.fog {
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    background: 
+        radial-gradient(circle at 30% 50%, rgba(154, 230, 110, 0.05) 0%, transparent 70%),
+        radial-gradient(circle at 70% 30%, rgba(76, 175, 80, 0.03) 0%, transparent 60%);
+    filter: blur(100px);
+    animation: fogMove 40s ease-in-out infinite;
+}
+
+/* Responsive adjustments for trees */
+@media (max-width: 768px) {
+    .tree::before {
+        font-size: 50px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .tree::before {
+        font-size: 35px !important;
+    }
+    
+    .firefly {
+        width: 6px;
+        height: 6px;
+    }
+}

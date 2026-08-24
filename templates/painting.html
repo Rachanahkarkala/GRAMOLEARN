@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}{{ animal|title }}{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='css/painting.css') }}">
+
+<div class="paint-page">
+
+    <!-- Palette -->
+
+    <div class="palette">
+
+        <div class="color active" style="background:#ff0000;" data-color="#ff0000"></div>
+        <div class="color" style="background:#ff7f00;" data-color="#ff7f00"></div>
+        <div class="color" style="background:#ffff00;" data-color="#ffff00"></div>
+        <div class="color" style="background:#00b300;" data-color="#00b300"></div>
+        <div class="color" style="background:#0099ff;" data-color="#0099ff"></div>
+        <div class="color" style="background:#7d3cff;" data-color="#7d3cff"></div>
+        <div class="color" style="background:#8B4513;" data-color="#8B4513"></div>
+        <div class="color" style="background:#000000;" data-color="#000000"></div>
+
+    </div>
+
+    <div class="paint-layout">
+
+        <!-- LEFT -->
+
+        <div class="canvas-card">
+
+            <img
+id="outlineImage"
+src="{{ url_for('static',
+filename='images/colouring/animals/outline/' + animal + '.png') }}"
+style="display:none;">
+
+            <canvas
+                id="drawingCanvas"
+                width="750"
+                height="750">
+            </canvas>
+
+            <div class="controls">
+
+                <button id="resetBtn">
+                    Reset
+                </button>
+
+                <button id="downloadBtn">
+                    Download
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="reference-card">
+
+            <h2>Reference</h2>
+
+            <img
+            id="referenceImage"
+            src="{{ url_for('static',
+            filename='images/colouring/animals/reference/' + animal + '.png') }}">
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const animal="{{ animal }}";
+
+</script>
+
+<script src="{{ url_for('static', filename='js/painting.js') }}"></script>
+
+{% endblock %}

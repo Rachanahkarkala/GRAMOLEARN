@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Gramolearn{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <script defer
+            src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+
+        Gramolearn
+
+    </div>
+
+    <ul>
+
+        <li><a href="/">Home</a></li>
+
+        <li><a href="{{ url_for('quiz') }}">Quiz</a></li>
+
+        <li><a href="{{ url_for('research') }}">Research</a></li>
+
+        <li><a href="{{ url_for('leaderboard') }}">Leaderboard</a></li>
+
+        <a href="{{ url_for('colouring') }}">Colouring</a>
+
+        <li><a href="{{ url_for('didyouknow') }}">Did You Know</a></li>
+        <li><a href="{{ url_for('profile') }}">Profile</a></li>
+
+    </ul>
+
+</nav>
+
+{% block content %}
+
+{% endblock %}
+
+</body>
+
+</html>

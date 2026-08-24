@@ -1,0 +1,22 @@
+[
+    {
+        "question": "Help the elephant reach the watering hole!",
+        "animal": "🐘"
+    },
+    {
+        "question": "Help the rabbit reach its burrow!",
+        "animal": "🐇"
+    },
+    {
+        "question": "Help the penguin reach the ice!",
+        "animal": "🐧"
+    },
+    {
+        "question": "Help the turtle reach the ocean!",
+        "animal": "🐢"
+    },
+    {
+        "question": "Help the lion reach its den!",
+        "animal": "🦁"
+    }
+]
