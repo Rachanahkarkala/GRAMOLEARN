@@ -53,7 +53,11 @@
     </button>
 
 </div>
+<script src="{{ url_for('static', filename='js/quiz_timer.js') }}"></script>
+
+<script>
+    startQuizTimer(0, false);
+</script>
 
 <script src="{{ url_for('static', filename='js/maze.js') }}"></script>
-
 {% endblock %}

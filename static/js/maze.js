@@ -1,44 +1,66 @@
 // ================================
 // ANIMAL MAZE - ROUND 5
 // ================================
-let mazeScore = 0;
-const canvas = document.getElementById("mazeCanvas");
-const ctx = canvas.getContext("2d");
 
-const mazeNumber = document.getElementById("mazeNumber");
-const mazeQuestion = document.getElementById("mazeQuestion");
-const mazeMessage = document.getElementById("mazeMessage");
-const nextBtn = document.getElementById("nextMaze");
+let mazeScore =
+    parseInt(
+        localStorage.getItem("mazeScore") || "0"
+    );
+
+
+const canvas =
+    document.getElementById("mazeCanvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+const mazeNumber =
+    document.getElementById("mazeNumber");
+
+const mazeQuestion =
+    document.getElementById("mazeQuestion");
+
+const mazeMessage =
+    document.getElementById("mazeMessage");
+
+const nextBtn =
+    document.getElementById("nextMaze");
 
 
 // ================================
-// 5 MAZE QUESTIONS
+// 5 MAZES
 // ================================
 
 const mazes = [
 
     {
-        question: "🐘 Help the elephant reach the watering hole!",
+        question:
+            "🐘 Help the elephant reach the watering hole!",
         animal: "🐘"
     },
 
     {
-        question: "🐇 Help the rabbit reach its burrow!",
+        question:
+            "🐇 Help the rabbit reach its burrow!",
         animal: "🐇"
     },
 
     {
-        question: "🐧 Help the penguin reach the ice!",
+        question:
+            "🐧 Help the penguin reach the ice!",
         animal: "🐧"
     },
 
     {
-        question: "🐢 Help the turtle reach the ocean!",
+        question:
+            "🐢 Help the turtle reach the ocean!",
         animal: "🐢"
     },
 
     {
-        question: "🦁 Help the lion reach its den!",
+        question:
+            "🦁 Help the lion reach its den!",
         animal: "🦁"
     }
 
@@ -46,19 +68,23 @@ const mazes = [
 
 
 // ================================
-// MAZE SETTINGS
+// SETTINGS
 // ================================
 
 const SIZE = 10;
 
-const CELL = canvas.width / SIZE;
+const CELL =
+    canvas.width / SIZE;
+
 
 let currentMaze = 0;
+
 
 let player = {
     row: 0,
     col: 0
 };
+
 
 let finish = {
     row: SIZE - 1,
@@ -67,12 +93,11 @@ let finish = {
 
 
 // ================================
-// SIMPLE MAZE LAYOUTS
+// MAZE LAYOUTS
 // ================================
 
 const layouts = [
 
-    // Layout 1 – concentric spiral
     [
         "..........",
         "XXXXXXXXX.",
@@ -83,10 +108,9 @@ const layouts = [
         "X.X.X.X.X.",
         "X.X...X.X.",
         "X.XXXXX.X.",
-        "X.......X."
+        "X........."
     ],
 
-    // Layout 2 – winding corridor with dead ends
     [
         "..........",
         "X.XXXXXXXX",
@@ -97,10 +121,9 @@ const layouts = [
         "X.X.X....X",
         "X.X.XXXX.X",
         "X.X......X",
-        "X.XXXXXXXX"
+        "X........."
     ],
 
-    // Layout 3 – diamond wall pattern
     [
         "..........",
         ".XXXXXXXX.",
@@ -114,7 +137,6 @@ const layouts = [
         ".........."
     ],
 
-    // Layout 4 – asymmetric striped maze
     [
         "..........",
         "X.XXXXXXXX",
@@ -125,21 +147,20 @@ const layouts = [
         "X.X......X",
         "X.X.XXXXXX",
         "X.X......X",
-        "X.XXXXXXXX"
+        "X........."
     ],
 
-    // Layout 5 – dense random maze
     [
-        "XX.XX.XXX.",
-        "X.X.X...X.",
-        "X.X.XXX.X.",
-        "X.X...X.X.",
-        "X.XXXXX.X.",
-        "X.......X.",
-        "X.XXXXX.X.",
-        "X.X...X.X.",
-        "X.X.X.X.X.",
-        "X...X...X."
+        "..........",
+        "XXXXXXX..X",
+        "X.......XX",
+        "X.XXXXX..X",
+        "X.X...X..X",
+        "X.X.X....X",
+        "X.X.XXXXX.",
+        "X.X.......",
+        "X.XXXXXXX.",
+        "X........."
     ]
 
 ];
@@ -159,15 +180,24 @@ loadMaze();
 function loadMaze() {
 
     player.row = 0;
+
     player.col = 0;
 
-    mazeNumber.innerText = currentMaze + 1;
 
-    mazeQuestion.innerText = mazes[currentMaze].question;
+    mazeNumber.innerText =
+        currentMaze + 1;
+
+
+    mazeQuestion.innerText =
+        mazes[currentMaze].question;
+
 
     mazeMessage.innerText = "";
 
-    nextBtn.style.display = "none";
+
+    nextBtn.style.display =
+        "none";
+
 
     drawMaze();
 
@@ -175,7 +205,7 @@ function loadMaze() {
 
 
 // ================================
-// DRAW MAZE
+// DRAW
 // ================================
 
 function drawMaze() {
@@ -187,12 +217,14 @@ function drawMaze() {
         canvas.height
     );
 
-    const layout = layouts[currentMaze];
+
+    const layout =
+        layouts[currentMaze];
 
 
-    // Background
+    ctx.fillStyle =
+        "#f7fff8";
 
-    ctx.fillStyle = "#f7fff8";
 
     ctx.fillRect(
         0,
@@ -202,18 +234,32 @@ function drawMaze() {
     );
 
 
-    // Draw cells
+    for (
+        let row = 0;
+        row < SIZE;
+        row++
+    ) {
 
-    for(let row = 0; row < SIZE; row++) {
+        for (
+            let col = 0;
+            col < SIZE;
+            col++
+        ) {
 
-        for(let col = 0; col < SIZE; col++) {
+            const x =
+                col * CELL;
 
-            const x = col * CELL;
-            const y = row * CELL;
+            const y =
+                row * CELL;
 
-            if(layout[row][col] === "X") {
 
-                ctx.fillStyle = "#164c2c";
+            if (
+                layout[row][col] === "X"
+            ) {
+
+                ctx.fillStyle =
+                    "#164c2c";
+
 
                 ctx.fillRect(
                     x,
@@ -226,7 +272,9 @@ function drawMaze() {
 
             else {
 
-                ctx.strokeStyle = "#d5e8d8";
+                ctx.strokeStyle =
+                    "#d5e8d8";
+
 
                 ctx.strokeRect(
                     x,
@@ -242,11 +290,14 @@ function drawMaze() {
     }
 
 
-    // FINISH
+    // HOME
 
-    ctx.fillStyle = "#72df49";
+    ctx.fillStyle =
+        "#72df49";
+
 
     ctx.beginPath();
+
 
     ctx.arc(
         finish.col * CELL + CELL / 2,
@@ -256,14 +307,21 @@ function drawMaze() {
         Math.PI * 2
     );
 
+
     ctx.fill();
 
 
-    ctx.font = `${CELL * 0.5}px Arial`;
+    ctx.font =
+        `${CELL * 0.5}px Arial`;
 
-    ctx.textAlign = "center";
 
-    ctx.textBaseline = "middle";
+    ctx.textAlign =
+        "center";
+
+
+    ctx.textBaseline =
+        "middle";
+
 
     ctx.fillText(
         "🏠",
@@ -274,7 +332,9 @@ function drawMaze() {
 
     // PLAYER
 
-    ctx.font = `${CELL * 0.55}px Arial`;
+    ctx.font =
+        `${CELL * 0.55}px Arial`;
+
 
     ctx.fillText(
         mazes[currentMaze].animal,
@@ -289,107 +349,112 @@ function drawMaze() {
 // MOVEMENT
 // ================================
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    let newRow = player.row;
-    let newCol = player.col;
+        let newRow =
+            player.row;
 
-    if(
-        event.key === "ArrowUp" ||
-        event.key.toLowerCase() === "w"
-    ) {
+        let newCol =
+            player.col;
 
-        newRow--;
+
+        if (
+            event.key === "ArrowUp" ||
+            event.key.toLowerCase() === "w"
+        ) {
+
+            newRow--;
+
+        }
+
+        else if (
+            event.key === "ArrowDown" ||
+            event.key.toLowerCase() === "s"
+        ) {
+
+            newRow++;
+
+        }
+
+        else if (
+            event.key === "ArrowLeft" ||
+            event.key.toLowerCase() === "a"
+        ) {
+
+            newCol--;
+
+        }
+
+        else if (
+            event.key === "ArrowRight" ||
+            event.key.toLowerCase() === "d"
+        ) {
+
+            newCol++;
+
+        }
+
+        else {
+
+            return;
+
+        }
+
+
+        event.preventDefault();
+
+
+        if (
+            newRow < 0 ||
+            newRow >= SIZE ||
+            newCol < 0 ||
+            newCol >= SIZE
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            layouts[currentMaze][newRow][newCol] === "X"
+        ) {
+
+            mazeMessage.innerText =
+                "🧱 Oops! That's a wall!";
+
+            return;
+
+        }
+
+
+        player.row =
+            newRow;
+
+        player.col =
+            newCol;
+
+
+        mazeMessage.innerText =
+            "";
+
+
+        drawMaze();
+
+
+        if (
+            player.row === finish.row &&
+            player.col === finish.col
+        ) {
+
+            mazeCompleted();
+
+        }
 
     }
-
-    else if(
-        event.key === "ArrowDown" ||
-        event.key.toLowerCase() === "s"
-    ) {
-
-        newRow++;
-
-    }
-
-    else if(
-        event.key === "ArrowLeft" ||
-        event.key.toLowerCase() === "a"
-    ) {
-
-        newCol--;
-
-    }
-
-    else if(
-        event.key === "ArrowRight" ||
-        event.key.toLowerCase() === "d"
-    ) {
-
-        newCol++;
-
-    }
-
-    else {
-
-        return;
-
-    }
-
-
-    event.preventDefault();
-
-
-    // Outside maze
-
-    if(
-        newRow < 0 ||
-        newRow >= SIZE ||
-        newCol < 0 ||
-        newCol >= SIZE
-    ) {
-
-        return;
-
-    }
-
-
-    // Wall
-
-    if(
-        layouts[currentMaze][newRow][newCol] === "X"
-    ) {
-
-        mazeMessage.innerText = "🧱 Oops! That's a wall!";
-
-        return;
-
-    }
-
-
-    // Move
-
-    player.row = newRow;
-
-    player.col = newCol;
-
-    mazeMessage.innerText = "";
-
-    drawMaze();
-
-
-    // Check finish
-
-    if(
-        player.row === finish.row &&
-        player.col === finish.col
-    ) {
-
-        mazeCompleted();
-
-    }
-
-});
+);
 
 
 // ================================
@@ -397,11 +462,22 @@ document.addEventListener("keydown", function(event) {
 // ================================
 
 function mazeCompleted() {
+
     mazeScore++;
+
+
+    localStorage.setItem(
+        "mazeScore",
+        mazeScore
+    );
+
+
     mazeMessage.innerText =
         "🎉 Amazing! You found the way home!";
 
-    nextBtn.style.display = "inline-block";
+
+    nextBtn.style.display =
+        "inline-block";
 
 }
 
@@ -410,66 +486,187 @@ function mazeCompleted() {
 // NEXT MAZE
 // ================================
 
-nextBtn.onclick = function() {
+nextBtn.onclick = function () {
 
     currentMaze++;
 
-    if(currentMaze >= mazes.length) {
+    if (currentMaze >= mazes.length) {
 
-    mazeMessage.innerText =
-        "🏆 Maze Round Completed!";
+        mazeMessage.innerText =
+            "🏆 Maze Round Completed!";
 
-    nextBtn.innerText =
-        "View Final Results →";
+        nextBtn.innerText =
+            "View Final Results →";
 
-    nextBtn.onclick = function() {
+        nextBtn.onclick = function () {
 
-        const quizAnswers =
-            JSON.parse(
-                localStorage.getItem("quizAnswers") || "[]"
-            );
+            submitFinalQuiz();
 
-        const scratchScore =
-            parseInt(
-                localStorage.getItem("scratchScore") || "0"
-            );
+        };
 
-        fetch("/quiz/submit", {
-
-            method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
-            body: JSON.stringify({
-
-                answers: quizAnswers,
-
-                scratch_score: scratchScore,
-
-                maze_score: mazeScore
-
-            })
-
-        })
-        .then(response => response.json())
-        .then(data => {
-
-            // Clean up
-            localStorage.removeItem("quizAnswers");
-            localStorage.removeItem("scratchScore");
-
-            // Finally go to result
-            window.location.href = "/quiz/result";
-
-        });
-
-    };
-
-    return;
-}
+        return;
+    }
 
     loadMaze();
 
 };
+
+
+// ================================
+// FINAL QUIZ SUBMISSION
+// ================================
+
+function submitFinalQuiz() {
+
+    mazeMessage.innerText =
+        "⏳ Calculating your final score...";
+
+    nextBtn.disabled = true;
+
+
+    const quizAnswers =
+        JSON.parse(
+            localStorage.getItem("quizAnswers") || "[]"
+        );
+
+
+    const scratchScore =
+        parseInt(
+            localStorage.getItem("scratchScore") || "0"
+        );
+
+
+    const finalMazeScore =
+        parseInt(
+            localStorage.getItem("mazeScore") || mazeScore
+        );
+
+
+    console.log("FINAL QUIZ DATA:");
+
+    console.log("Main answers:", quizAnswers);
+
+    console.log("Scratch score:", scratchScore);
+
+    console.log("Maze score:", finalMazeScore);
+
+
+    fetch("/quiz/submit", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+            answers: quizAnswers,
+
+            scratch_score: scratchScore,
+
+            maze_score: finalMazeScore,
+
+            final_submission: true
+
+        })
+
+    })
+
+    .then(async response => {
+
+        const text = await response.text();
+
+        console.log(
+            "Server response:",
+            text
+        );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Server returned " +
+                response.status +
+                ": " +
+                text
+            );
+
+        }
+
+
+        try {
+
+            return JSON.parse(text);
+
+        }
+
+        catch {
+
+            throw new Error(
+                "Server did not return JSON."
+            );
+
+        }
+
+    })
+
+    .then(data => {
+
+        console.log(
+            "FINAL SCORE:",
+            data
+        );
+
+
+        // Save final score locally too
+        localStorage.setItem(
+            "finalScore",
+            data.score
+        );
+
+
+        // Clean quiz data
+        localStorage.removeItem(
+            "quizAnswers"
+        );
+
+        localStorage.removeItem(
+            "scratchScore"
+        );
+
+        localStorage.removeItem(
+            "mazeScore"
+        );
+
+        clearQuizTimer();
+
+
+        // GO TO RESULT PAGE
+        window.location.href =
+            "/quiz/result";
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "FINAL QUIZ SUBMISSION FAILED:",
+            error
+        );
+
+
+        mazeMessage.innerHTML =
+            "❌ Something went wrong while saving your score.<br>" +
+            "<small>" +
+            error.message +
+            "</small>";
+
+
+        nextBtn.disabled = false;
+
+    });
+
+}

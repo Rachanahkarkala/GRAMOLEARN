@@ -172,7 +172,7 @@ def login():
 
             login_user(user)
 
-            return redirect("/")
+            return redirect("/main")
 
     return render_template("auth/login.html")
 @app.route("/logout")
@@ -204,6 +204,12 @@ def landing():
 
         return redirect("/login")
 
+    return redirect("/main")
+
+@app.route("/main")
+@login_required
+def main():
+
     return render_template("landing.html")
 
 @app.route("/colouring")
@@ -212,15 +218,72 @@ def colouring():
 @app.route("/colouring/<category>")
 def colouring_category(category):
 
-    if category=="animals":
-        return render_template("animal_selection.html")
+    animals = {
 
-    return "Coming Soon"
-@app.route("/paint/<animal>")
-def paint(animal):
+        "animals": [
+            {"name": "Giraffe", "emoji": "🦒"},
+            {"name": "Lion", "emoji": "🦁"},
+            {"name": "Elephant", "emoji": "🐘"},
+            {"name": "Tiger", "emoji": "🐅"},
+            {"name": "Zebra", "emoji": "🦓"}
+        ],
+
+        "birds": [
+            {"name": "Parrot", "emoji": "🦜"},
+            {"name": "Eagle", "emoji": "🦅"},
+            {"name": "Peacock", "emoji": "🦚"},
+            {"name": "Owl", "emoji": "🦉"},
+            {"name": "Flamingo", "emoji": "🦩"}
+        ],
+
+        "reptiles": [
+            {"name": "Snake", "emoji": "🐍"},
+            {"name": "Crocodile", "emoji": "🐊"},
+            {"name": "Turtle", "emoji": "🐢"},
+            {"name": "Lizard", "emoji": "🦎"},
+            {"name": "Chameleon", "emoji": "🦎"}
+        ],
+
+        "amphibians": [
+            {"name": "Frog", "emoji": "🐸"},
+            {"name": "Toad", "emoji": "🐸"},
+            {"name": "Salamander", "emoji": "🦎"},
+            {"name": "Newt", "emoji": "🦎"},
+            {"name": "Axolotl", "emoji": "🦎"}
+        ],
+
+        "dinosaurs": [
+            {"name": "T-Rex", "emoji": "🦖"},
+            {"name": "Triceratops", "emoji": "🦕"},
+            {"name": "Stegosaurus", "emoji": "🦕"},
+            {"name": "Brachiosaurus", "emoji": "🦕"},
+            {"name": "Velociraptor", "emoji": "🦖"}
+        ],
+        "marine": [
+            {"name": "Dolphin", "emoji": "🐬"},
+            {"name": "Shark", "emoji": "🦈"},
+            {"name": "Whale", "emoji": "🐋"},
+            {"name": "Octopus", "emoji": "🐙"},
+            {"name": "Turtle", "emoji": "🐢"}
+]
+        
+    }
+
+    if category not in animals:
+        return "Category not found", 404
+
+    return render_template(
+        "animal_selection.html",
+        category=category,
+        animals=animals[category]
+    )
+@app.route("/paint/<category>/<animal>")
+def paint(category, animal):
+
     return render_template(
         "painting.html",
-        animal=animal
+        animal=animal,
+        category=category
     )
 @app.route("/didyouknow")
 def didyouknow():
@@ -229,13 +292,21 @@ def didyouknow():
 
 
 @app.route("/quiz")
+@login_required
 def quiz():
 
     return render_template("quiz/quiz_home.html")
 @app.route("/quiz/<difficulty>")
+@login_required
 def quiz_difficulty(difficulty):
 
-    session.clear()
+    # DO NOT use session.clear()
+    # It would remove Flask-Login's user session and log the user out.
+
+    session.pop("score", None)
+    session.pop("answers", None)
+    session.pop("result", None)
+    session.pop("quiz_result", None)
 
     session["difficulty"] = difficulty
 
@@ -253,28 +324,48 @@ def quiz_difficulty(difficulty):
         difficulty=difficulty
     )
 @app.route("/quiz/start")
+@login_required
 def start_quiz():
 
     questions = load_questions()
 
-    session["score"] = 0
+    difficulty = session.get("difficulty", "easy")
 
+    if difficulty == "easy":
+        quiz_time = 1800
+    elif difficulty == "medium":
+        quiz_time = 1200
+    elif difficulty == "hard":
+        quiz_time = 900
+    else:
+        difficulty = "easy"
+        quiz_time = 1800
+
+    session["difficulty"] = difficulty
+    session["time"] = quiz_time
+    session["score"] = 0
     session["answers"] = []
 
     return render_template(
-
         "quiz/quiz_engine.html",
-
         questions=questions,
-
-        timer=session["time"]
-
+        timer=quiz_time
     )
 @app.route("/quiz/submit", methods=["POST"])
 @login_required
 def submit_quiz():
 
-    data = request.get_json()
+    data = request.get_json() or {}
+
+    if data.get("final_submission") is not True:
+
+        return jsonify({
+
+            "success": False,
+
+            "message": "Quiz submission is only allowed after the final maze."
+
+        }), 400
 
     user_answers = data.get("answers", [])
 
@@ -282,31 +373,34 @@ def submit_quiz():
 
     maze_score = int(data.get("maze_score", 0))
 
+
+    # ==========================================
+    # MAIN QUIZ
+    # ==========================================
+
     questions = load_questions()
 
-    score = 0
+    main_score = 0
     correct = 0
     wrong = 0
 
+    for i, question in enumerate(questions):
 
-    # =========================
-    # NORMAL QUIZ
-    # =========================
+        if i >= len(user_answers):
+            wrong += 1
+            continue
 
-    for i in range(len(questions)):
+        user_answer = str(
+            user_answers[i]
+        ).strip().lower()
 
-        user_answer = ""
+        correct_answer = str(
+            question["answer"]
+        ).strip().lower()
 
-        if i < len(user_answers):
-            user_answer = user_answers[i]
+        if user_answer == correct_answer:
 
-        correct_answer = questions[i]["answer"]
-
-        if str(user_answer).strip().lower() == \
-           str(correct_answer).strip().lower():
-
-            score += 10
-
+            main_score += 10
             correct += 1
 
         else:
@@ -314,92 +408,123 @@ def submit_quiz():
             wrong += 1
 
 
-    # =========================
-    # SCRATCH ROUND
-    # =========================
+    # ==========================================
+    # SCRATCH + MAZE
+    # ==========================================
 
-    score += scratch_score * 10
+    scratch_points = scratch_score * 10
 
-    correct += scratch_score
-
-    wrong += (5 - scratch_score)
+    maze_points = maze_score * 10
 
 
-    # =========================
-    # MAZE ROUND
-    # =========================
+    # ==========================================
+    # FINAL SCORE
+    # ==========================================
 
-    score += maze_score * 10
-
-    correct += maze_score
-
-    wrong += (5 - maze_score)
-
-
-    # =========================
-    # TOTAL
-    # =========================
-
-    total_questions = len(questions) + 10
-
-    percentage = round(
-        (correct / total_questions) * 100
+    final_score = (
+        main_score
+        + scratch_points
+        + maze_points
     )
 
 
-    # =========================
+    # ==========================================
+    # TOTAL QUESTIONS
+    # ==========================================
+
+    total_questions = (
+        len(questions)
+        + 5
+        + 5
+    )
+
+
+    total_correct = (
+        correct
+        + scratch_score
+        + maze_score
+    )
+
+    total_wrong = (
+        total_questions
+        - total_correct
+    )
+
+
+    percentage = round(
+        (total_correct / total_questions) * 100
+    )
+
+
+    # ==========================================
     # SAVE RESULT
-    # =========================
+    # ==========================================
 
     session["result"] = {
 
-        "score": score,
+        "score": final_score,
 
-        "correct": correct,
+        "correct": total_correct,
 
-        "wrong": wrong,
+        "wrong": total_wrong,
 
         "percentage": percentage,
 
         "difficulty": session.get(
             "difficulty",
             "easy"
-        )
+        ),
+
+        "main_score": main_score,
+
+        "scratch_score": scratch_score,
+
+        "maze_score": maze_score,
+
+        "total_questions": total_questions
 
     }
 
 
-    # =========================
+    # ==========================================
     # UPDATE LEADERBOARD
-    # =========================
+    # ==========================================
 
-    if score > current_user.score:
+    current_user.score = final_score
 
-        current_user.score = score
+    db.session.commit()
 
-        db.session.commit()
 
+    # ==========================================
+    # RESPONSE
+    # ==========================================
 
     return jsonify({
 
-        "score": score,
+        "success": True,
 
-        "correct": correct,
+        "score": final_score,
 
-        "wrong": wrong,
+        "correct": total_correct,
+
+        "wrong": total_wrong,
 
         "percentage": percentage
 
     })
 @app.route("/quiz/result")
+@login_required
 def quiz_result():
 
+    result = session.get("result")
+
+    if not result:
+
+        return "No quiz result found.", 404
+
     return render_template(
-
-        "quiz/quiz_result.html",
-
-        result=session.get("result")
-
+        "quiz/result.html",
+        result=result
     )
 @app.route("/leaderboard")
 @login_required

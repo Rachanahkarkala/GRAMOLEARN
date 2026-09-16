@@ -1,62 +1,142 @@
 {% extends "base.html" %}
 
-{% block title %}Animals{% endblock %}
+{% block title %}Choose Your {{ category|title }}{% endblock %}
 
 {% block content %}
 
-<link rel="stylesheet"
-href="{{ url_for('static', filename='css/animal_selection.css') }}">
+<div class="animal-selection-page">
 
-<div class="animal-container">
+    <h1>Choose Your {{ category|title }}</h1>
 
-<h1>Choose Your Animal</h1>
+    <p>Select an animal to start colouring.</p>
 
-<p>Select an animal to start colouring.</p>
+    <div class="animal-grid">
 
-<div class="animal-grid">
+        {% for animal in animals %}
 
-<a href="/paint/giraffe" class="animal-card">
+        <a href="{{ url_for('paint', category=category, animal=animal.name|lower|replace(' ', '_')) }}"
+           class="animal-card">
 
-<div class="emoji">🦒</div>
+            <div class="animal-emoji">
+                {{ animal.emoji }}
+            </div>
 
-<h2>Giraffe</h2>
+            <h2>{{ animal.name }}</h2>
 
-</a>
+        </a>
 
-<a href="/paint/lion" class="animal-card">
+        {% endfor %}
 
-<div class="emoji">🦁</div>
-
-<h2>Lion</h2>
-
-</a>
-
-<a href="/paint/elephant" class="animal-card">
-
-<div class="emoji">🐘</div>
-
-<h2>Elephant</h2>
-
-</a>
-
-<a href="/paint/tiger" class="animal-card">
-
-<div class="emoji">🐅</div>
-
-<h2>Tiger</h2>
-
-</a>
-
-<a href="/paint/zebra" class="animal-card">
-
-<div class="emoji">🦓</div>
-
-<h2>Zebra</h2>
-
-</a>
+    </div>
 
 </div>
 
-</div>
+<style>
+
+.animal-selection-page {
+
+    min-height: 85vh;
+
+    text-align: center;
+
+    padding: 40px 5%;
+
+    color: white;
+
+}
+
+.animal-selection-page h1 {
+
+    font-size: 52px;
+
+    color: #d5ffad;
+
+    margin-bottom: 10px;
+
+}
+
+.animal-selection-page p {
+
+    font-size: 22px;
+
+    margin-bottom: 50px;
+
+}
+
+.animal-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 30px;
+
+}
+
+.animal-card {
+
+    background: #1d422c;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    border-radius: 25px;
+
+    padding: 50px 20px;
+
+    text-decoration: none;
+
+    color: white;
+
+    transition: .3s;
+
+}
+
+.animal-card:hover {
+
+    transform: translateY(-10px);
+
+    background: #245336;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,.3);
+
+}
+
+.animal-emoji {
+
+    font-size: 90px;
+
+    margin-bottom: 20px;
+
+}
+
+.animal-card h2 {
+
+    font-size: 30px;
+
+    margin: 0;
+
+}
+
+@media(max-width:900px) {
+
+    .animal-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .animal-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+</style>
 
 {% endblock %}

@@ -5,47 +5,33 @@
 {% block content %}
 
 <link rel="stylesheet"
-href="{{ url_for('static', filename='css/quiz_engine.css') }}">
+      href="{{ url_for('static', filename='css/quiz_engine.css') }}?v=999">
 
 <div class="quiz-container">
-
-    <!-- TOP BAR -->
 
     <div class="quiz-header">
 
         <div class="round-box">
-
             <h2 id="roundTitle">Round 1</h2>
-
             <p id="roundType">MCQs</p>
-
         </div>
 
         <div class="timer-box">
-
-            <h2 id="timer"></h2>
-
+            <h2 id="timer">30:00</h2>
         </div>
 
         <div class="score-box">
-
             <h2>Score</h2>
-
             <p id="score">0</p>
-
         </div>
 
     </div>
 
-    <!-- Progress -->
 
     <div class="progress">
-
         <div id="progressBar"></div>
-
     </div>
 
-    <!-- Question Card -->
 
     <div class="question-card">
 
@@ -53,56 +39,57 @@ href="{{ url_for('static', filename='css/quiz_engine.css') }}">
 
         <h1 id="questionText"></h1>
 
+
         <!-- MCQ -->
 
-        <div id="mcqContainer" class="answer-container">
-
+        <div id="mcqContainer"
+             class="answer-container">
         </div>
 
-        <!-- TRUE FALSE -->
 
-        <div id="tfContainer" class="answer-container" style="display:none;">
+        <!-- TRUE / FALSE -->
 
-            <button class="tf-btn" data-value="true">
+        <div id="tfContainer"
+             class="answer-container"
+             style="display:none;">
 
+            <button class="tf-btn"
+                    data-value="true">
                 TRUE
-
             </button>
 
-            <button class="tf-btn" data-value="false">
-
+            <button class="tf-btn"
+                    data-value="false">
                 FALSE
-
             </button>
 
         </div>
+
 
         <!-- FILL -->
 
-        <div id="fillContainer" class="answer-container" style="display:none;">
+        <div id="fillContainer"
+             class="answer-container"
+             style="display:none;">
 
             <input
-
-            id="fillAnswer"
-
-            placeholder="Type your answer...">
+                id="fillAnswer"
+                type="text"
+                placeholder="Type your answer..."
+                autocomplete="off"
+            >
 
         </div>
 
-        <!-- NAV -->
 
         <div class="nav-buttons">
 
             <button id="prevBtn">
-
                 Previous
-
             </button>
 
             <button id="nextBtn">
-
-                Next
-
+                Next →
             </button>
 
         </div>
@@ -111,18 +98,33 @@ href="{{ url_for('static', filename='css/quiz_engine.css') }}">
 
 </div>
 
-<!-- Pass Flask JSON -->
 
 <script>
+    const questions = {{ questions | tojson }};
+    const totalQuestions = questions.length;
 
-const questions = {{ questions|tojson }};
+    /*
+       This is ONLY the time for the main quiz.
+       The same end timestamp will continue through
+       Scratch + Maze.
+    */
+    const totalTime = Number({{ timer }});
 
-const totalQuestions = questions.length;
-
-const totalTime = {{ timer }};
-
+    console.log("QUIZ TIMER RECEIVED:", totalTime);
+    console.log("TOTAL QUESTIONS:", totalQuestions);
 </script>
 
-<script src="{{ url_for('static', filename='js/quiz_engine.js') }}"></script>
 
+<script src="{{ url_for('static', filename='js/quiz_timer.js') }}?v=999"></script>
+
+<script>
+    /*
+       IMPORTANT:
+       A NEW QUIZ must ALWAYS create a fresh timer.
+    */
+    startQuizTimer(totalTime, true);
+</script>
+
+
+<script src="{{ url_for('static', filename='js/quiz_engine.js') }}?v=999"></script>
 {% endblock %}

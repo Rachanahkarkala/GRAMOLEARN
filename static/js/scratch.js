@@ -1,153 +1,287 @@
+// ==========================================
+// SCRATCH ROUND
+// ==========================================
+
 let scratchScore = 0;
+
 let questions = [];
 
 let current = 0;
 
 let scratching = false;
 
-const cards = document.querySelectorAll(".mystery-card");
+// ==========================================
+// ELEMENTS
+// ==========================================
 
-const questionSection = document.getElementById("questionSection");
+const cards =
+    document.querySelectorAll(".mystery-card");
 
-const scratchSection = document.getElementById("scratchSection");
+const questionSection =
+    document.getElementById("questionSection");
 
-const questionText = document.getElementById("questionText");
+const scratchSection =
+    document.getElementById("scratchSection");
 
-const answerInput = document.getElementById("answerInput");
+const questionText =
+    document.getElementById("questionText");
 
-const submitBtn = document.getElementById("submitAnswer");
+const answerInput =
+    document.getElementById("answerInput");
 
-const animalImage = document.getElementById("animalImage");
+const submitBtn =
+    document.getElementById("submitAnswer");
 
-const nextBtn = document.getElementById("nextQuestion");
+const animalImage =
+    document.getElementById("animalImage");
+
+const nextBtn =
+    document.getElementById("nextQuestion");
+
+
+// ==========================================
+// LOAD QUESTIONS
+// ==========================================
 
 fetch("/static/data/quiz/scratch.json")
-.then(r=>r.json())
-.then(data=>{
 
-    questions=data;
+    .then(response => {
 
-});
+        if (!response.ok) {
+            throw new Error("Scratch questions not found");
+        }
 
-cards.forEach(card=>{
+        return response.json();
 
-    card.onclick=()=>{
+    })
 
-        document.getElementById("cardSelection").style.display="none";
+    .then(data => {
 
-        questionSection.style.display="block";
+        questions = data;
 
         loadQuestion();
 
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+    });
+
+
+// ==========================================
+// LOAD QUESTION
+// ==========================================
+
+function loadQuestion() {
+
+    if (current >= questions.length) {
+
+        finishScratch();
+
+        return;
+
     }
 
-});
+    document.getElementById("cardSelection")
+        .style.display = "none";
 
-function loadQuestion(){
+    questionSection.style.display =
+        "block";
 
-    questionText.innerHTML=questions[current].question;
+    scratchSection.style.display =
+        "none";
 
-    answerInput.value="";
+
+    questionText.innerHTML =
+        questions[current].question;
+
+    answerInput.value = "";
 
 }
 
-submitBtn.onclick=function(){
 
-    let ans=answerInput.value.trim().toLowerCase();
+// ==========================================
+// SUBMIT ANSWER
+// ==========================================
 
-    if(ans === questions[current].answer.toLowerCase()){
+submitBtn.onclick = function () {
 
-    scratchScore++;
+    const ans =
+        answerInput.value
+            .trim()
+            .toLowerCase();
 
-    questionSection.style.display="none";
 
-    scratchSection.style.display="block";
+    const correct =
+        questions[current].answer
+            .trim()
+            .toLowerCase();
+
+
+    if (ans === correct) {
+
+        scratchScore++;
+
+        localStorage.setItem(
+            "scratchScore",
+            scratchScore
+        );
+
+    }
+
+
+    questionSection.style.display =
+        "none";
+
+    scratchSection.style.display =
+        "block";
+
 
     animalImage.src =
         "/static/images/scratch/" +
         questions[current].image;
 
+
     initialiseScratch();
 
-}
+};
 
 
-}
+// ==========================================
+// SCRATCH CANVAS
+// ==========================================
 
-function initialiseScratch(){
+function initialiseScratch() {
 
-    const canvas=document.getElementById("scratchCanvas");
+    const canvas =
+        document.getElementById("scratchCanvas");
 
-    const ctx=canvas.getContext("2d");
+    const ctx =
+        canvas.getContext("2d");
 
-    ctx.globalCompositeOperation="source-over";
 
-    ctx.fillStyle="#BDBDBD";
+    ctx.globalCompositeOperation =
+        "source-over";
 
-    ctx.fillRect(0,0,canvas.width,canvas.height);
 
-    scratching=false;
+    ctx.fillStyle =
+        "#BDBDBD";
 
-    canvas.onmousedown=()=>{
 
-        scratching=true;
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
-    }
 
-    canvas.onmouseup=()=>{
+    scratching = false;
 
-        scratching=false;
 
-    }
+    canvas.onmousedown = () => {
 
-    canvas.onmouseleave=()=>{
+        scratching = true;
 
-        scratching=false;
+    };
 
-    }
 
-    canvas.onmousemove=(e)=>{
+    canvas.onmouseup = () => {
 
-        if(!scratching) return;
+        scratching = false;
 
-        const rect=canvas.getBoundingClientRect();
+    };
 
-        const x=e.clientX-rect.left;
 
-        const y=e.clientY-rect.top;
+    canvas.onmouseleave = () => {
 
-        ctx.globalCompositeOperation="destination-out";
+        scratching = false;
+
+    };
+
+
+    canvas.onmousemove = (event) => {
+
+        if (!scratching) {
+            return;
+        }
+
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        const x =
+            event.clientX -
+            rect.left;
+
+
+        const y =
+            event.clientY -
+            rect.top;
+
+
+        ctx.globalCompositeOperation =
+            "destination-out";
+
 
         ctx.beginPath();
 
-        ctx.arc(x,y,30,0,Math.PI*2);
+
+        ctx.arc(
+            x,
+            y,
+            30,
+            0,
+            Math.PI * 2
+        );
+
 
         ctx.fill();
 
-    }
+    };
 
 }
 
-nextBtn.onclick=function(){
+
+// ==========================================
+// NEXT
+// ==========================================
+
+nextBtn.onclick = function () {
 
     current++;
 
-    scratchSection.style.display="none";
 
-    questionSection.style.display="block";
+    if (current >= questions.length) {
 
-    if(current >= questions.length){
+        finishScratch();
+
+        return;
+
+    }
+
+
+    loadQuestion();
+
+};
+
+
+// ==========================================
+// SCRATCH COMPLETE
+// ==========================================
+
+function finishScratch() {
 
     localStorage.setItem(
         "scratchScore",
         scratchScore
     );
 
-    window.location = "/quiz/maze";
 
-    return;
-}
-
-    loadQuestion();
+    window.location.href =
+        "/quiz/maze";
 
 }

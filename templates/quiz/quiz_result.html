@@ -13,13 +13,41 @@ href="{{ url_for('static', filename='css/quiz_result.css') }}">
 
     <h1>🎉 Quiz Completed!</h1>
 
-    <h2>Your Score</h2>
+<h2>Your Score</h2>
 
-    <div class="score-circle">
+<div class="score-circle">
 
-        {{ result.score }}
+    {{ result.score }}
 
-    </div>
+</div>
+
+<p>
+    You got
+    <strong>{{ result.correct }}</strong>
+    out of
+    <strong>{{ result.total_questions }}</strong>
+    questions correct!
+</p>
+
+<p>
+    Percentage:
+    <strong>{{ result.percentage }}%</strong>
+</p>
+
+<p>
+    🧠 Main Quiz:
+    {{ result.main_correct }}
+</p>
+
+<p>
+    🎴 Scratch:
+    {{ result.scratch_score }}
+</p>
+
+<p>
+    🐾 Maze:
+    {{ result.maze_score }}
+</p>
 
     <a href="/quiz">
 

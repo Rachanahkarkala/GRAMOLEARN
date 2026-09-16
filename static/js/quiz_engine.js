@@ -1,243 +1,374 @@
 let currentQuestion = 0;
+let answers = new Array(questions.length).fill("");
 
-let answers = new Array(totalQuestions).fill(null);
+const questionNumber = document.getElementById("questionNumber");
+const questionText = document.getElementById("questionText");
 
-let score = 0;
+const mcqContainer = document.getElementById("mcqContainer");
+const tfContainer = document.getElementById("tfContainer");
+const fillContainer = document.getElementById("fillContainer");
 
-let timer = totalTime;
+const fillAnswer = document.getElementById("fillAnswer");
+
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+const scoreDisplay = document.getElementById("score");
+const progressBar = document.getElementById("progressBar");
+
+const roundTitle = document.getElementById("roundTitle");
+const roundType = document.getElementById("roundType");
 
 
-// =========================
-// TIMER
-// =========================
+// ======================================================
+// SHOW QUESTION
+// ======================================================
 
-const timerText = document.getElementById("timer");
+function renderQuestion() {
 
-const interval = setInterval(() => {
+    const question = questions[currentQuestion];
 
-    if(timer <= 0){
+    if (!question) return;
 
-        submitQuiz();
+    questionNumber.textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    questionText.textContent = question.question;
+
+
+    // Hide everything first
+    mcqContainer.style.display = "none";
+    tfContainer.style.display = "none";
+    fillContainer.style.display = "none";
+
+
+    // ==================================================
+    // ROUND 1 — MCQ
+    // ==================================================
+
+    if (currentQuestion < 5) {
+
+        roundTitle.textContent = "Round 1";
+        roundType.textContent = "MCQs";
+
+        mcqContainer.style.display = "grid";
+
+        renderMCQ(question);
+
+    }
+
+
+    // ==================================================
+    // ROUND 2 — TRUE / FALSE
+    // ==================================================
+
+    else if (currentQuestion < 10) {
+
+        roundTitle.textContent = "Round 2";
+        roundType.textContent = "True / False";
+
+        tfContainer.style.display = "flex";
+
+        renderTF();
+
+    }
+
+
+    // ==================================================
+    // ROUND 3 — FILL IN THE BLANK
+    // ==================================================
+
+    else {
+
+        roundTitle.textContent = "Round 3";
+        roundType.textContent = "Fill in the Blanks";
+
+        fillContainer.style.display = "flex";
+
+        fillAnswer.value =
+            answers[currentQuestion] || "";
+
+        setTimeout(() => {
+            fillAnswer.focus();
+        }, 50);
+
+    }
+
+
+    // Progress
+    const percentage =
+        ((currentQuestion + 1) / questions.length) * 100;
+
+    progressBar.style.width =
+        `${percentage}%`;
+
+
+    // Previous
+    prevBtn.style.visibility =
+        currentQuestion === 0 ? "hidden" : "visible";
+
+
+    // Next
+    nextBtn.textContent =
+        currentQuestion === questions.length - 1
+            ? "Continue →"
+            : "Next →";
+
+
+    updateScore();
+
+}
+
+
+// ======================================================
+// MCQ
+// ======================================================
+
+function renderMCQ(question) {
+
+    mcqContainer.innerHTML = "";
+
+    const options = question.options || [];
+
+    options.forEach(option => {
+
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+
+        button.className = "mcq-option";
+
+        button.textContent = option;
+
+
+        if (
+            answers[currentQuestion] &&
+            answers[currentQuestion].toLowerCase() ===
+            option.toLowerCase()
+        ) {
+
+            button.classList.add("selected");
+
+        }
+
+
+        button.addEventListener("click", () => {
+
+            document
+                .querySelectorAll(".mcq-option")
+                .forEach(btn =>
+                    btn.classList.remove("selected")
+                );
+
+            button.classList.add("selected");
+
+            answers[currentQuestion] =
+                option;
+
+            updateScore();
+
+        });
+
+
+        mcqContainer.appendChild(button);
+
+    });
+
+}
+
+
+// ======================================================
+// TRUE / FALSE
+// ======================================================
+
+function renderTF() {
+
+    const buttons =
+        tfContainer.querySelectorAll(".tf-btn");
+
+    buttons.forEach(button => {
+
+        button.classList.remove("selected");
+
+
+        if (
+            answers[currentQuestion] &&
+            answers[currentQuestion].toLowerCase() ===
+            button.dataset.value.toLowerCase()
+        ) {
+
+            button.classList.add("selected");
+
+        }
+
+
+        button.onclick = () => {
+
+            buttons.forEach(btn =>
+                btn.classList.remove("selected")
+            );
+
+            button.classList.add("selected");
+
+            answers[currentQuestion] =
+                button.dataset.value;
+
+            updateScore();
+
+        };
+
+    });
+
+}
+
+
+// ======================================================
+// FILL ANSWER
+// ======================================================
+
+fillAnswer.addEventListener("input", () => {
+
+    answers[currentQuestion] =
+        fillAnswer.value.trim();
+
+    updateScore();
+
+});
+
+
+// ======================================================
+// SAVE ANSWER
+// ======================================================
+
+function saveAnswer() {
+
+    if (currentQuestion >= 10) {
+
+        answers[currentQuestion] =
+            fillAnswer.value.trim();
+
+    }
+
+}
+
+
+// ======================================================
+// CALCULATE SCORE
+// ======================================================
+
+function calculateScore() {
+
+    let total = 0;
+
+    questions.forEach((question, index) => {
+
+        const userAnswer =
+            String(answers[index] || "")
+                .trim()
+                .toLowerCase();
+
+        const correctAnswer =
+            String(question.answer || "")
+                .trim()
+                .toLowerCase();
+
+        if (
+            userAnswer &&
+            userAnswer === correctAnswer
+        ) {
+
+            total += 10;
+
+        }
+
+    });
+
+    return total;
+
+}
+
+
+// ======================================================
+// UPDATE SCORE
+// ======================================================
+
+function updateScore() {
+
+    scoreDisplay.textContent =
+        calculateScore();
+
+}
+
+
+// ======================================================
+// NEXT
+// ======================================================
+
+nextBtn.addEventListener("click", () => {
+
+    saveAnswer();
+
+
+    // ==================================================
+    // LAST QUESTION OF MAIN QUIZ
+    // ==================================================
+
+    if (
+        currentQuestion ===
+        questions.length - 1
+    ) {
+
+        console.log(
+            "ROUND 3 COMPLETE → GOING TO ROUND 4"
+        );
+
+
+        // Save answers
+        localStorage.setItem(
+            "quizAnswers",
+            JSON.stringify(answers)
+        );
+
+
+        /*
+         * VERY IMPORTANT:
+         *
+         * DO NOT CALL /quiz/submit HERE.
+         *
+         * The quiz is NOT finished.
+         *
+         * Scratch comes next.
+         */
+
+        window.location.href =
+            "/quiz/scratch";
 
         return;
 
     }
 
-    timer--;
 
-    let min = Math.floor(timer/60);
+    // ==================================================
+    // NORMAL NEXT QUESTION
+    // ==================================================
 
-    let sec = timer%60;
+    currentQuestion++;
 
-    timerText.innerHTML =
-        `${min}:${sec.toString().padStart(2,"0")}`;
+    renderQuestion();
 
-},1000);
+});
 
 
-// =========================
-// LOAD FIRST QUESTION
-// =========================
-
-renderQuestion();
-
-
-// =========================
-// RENDER QUESTION
-// =========================
-
-function renderQuestion(){
-
-    const q = questions[currentQuestion];
-
-    document.getElementById("questionNumber").innerHTML =
-        `Question ${currentQuestion+1} / ${totalQuestions}`;
-
-    document.getElementById("questionText").innerHTML =
-        q.question;
-
-
-    // Progress Bar
-
-    document.getElementById("progressBar").style.width =
-        ((currentQuestion+1)/totalQuestions)*100 + "%";
-
-
-    // ROUND TITLE
-
-    if(q.round==1){
-
-        document.getElementById("roundTitle").innerHTML="Round 1";
-
-        document.getElementById("roundType").innerHTML="MCQs";
-
-    }
-
-    else if(q.round==2){
-
-        document.getElementById("roundTitle").innerHTML="Round 2";
-
-        document.getElementById("roundType").innerHTML="True / False";
-
-    }
-
-    else{
-
-        document.getElementById("roundTitle").innerHTML="Round 3";
-
-        document.getElementById("roundType").innerHTML="Fill in the Blank";
-
-    }
-
-
-    // Hide everything
-
-    document.getElementById("mcqContainer").style.display="none";
-
-    document.getElementById("tfContainer").style.display="none";
-
-    document.getElementById("fillContainer").style.display="none";
-
-
-
-    // ======================
-    // MCQ
-    // ======================
-
-    if(q.type=="mcq"){
-
-        const box=document.getElementById("mcqContainer");
-
-        box.innerHTML="";
-
-        box.style.display="grid";
-
-        q.options.forEach(option=>{
-
-            const btn=document.createElement("button");
-
-            btn.className="option";
-
-            btn.innerHTML=option;
-
-            if(answers[currentQuestion]==option){
-
-                btn.style.background="#2d8a3b";
-
-                btn.style.color="white";
-
-            }
-
-            btn.onclick=function(){
-
-                answers[currentQuestion]=option;
-
-                renderQuestion();
-
-            }
-
-            box.appendChild(btn);
-
-        });
-
-    }
-
-
-    // ======================
-    // TRUE FALSE
-    // ======================
-
-    if(q.type=="tf"){
-
-        document.getElementById("tfContainer").style.display="flex";
-
-        document.querySelectorAll(".tf-btn").forEach(btn=>{
-
-            btn.style.background="#eef5ef";
-
-            btn.style.color="black";
-
-            if(answers[currentQuestion]==btn.dataset.value){
-
-                btn.style.background="#2d8a3b";
-
-                btn.style.color="white";
-
-            }
-
-            btn.onclick=function(){
-
-                answers[currentQuestion]=btn.dataset.value;
-
-                renderQuestion();
-
-            }
-
-        });
-
-    }
-
-
-
-    // ======================
-    // FILL
-    // ======================
-
-    if(q.type=="fill"){
-
-        document.getElementById("fillContainer").style.display="block";
-
-        const input=document.getElementById("fillAnswer");
-
-        input.value=answers[currentQuestion] || "";
-
-        input.oninput=function(){
-
-            answers[currentQuestion]=this.value;
-
-        }
-
-    }
-
-}
-
-
-// =========================
-// NEXT
-// =========================
-
-document.getElementById("nextBtn").onclick=function(){
-
-    if(currentQuestion<totalQuestions-1){
-
-        currentQuestion++;
-
-        renderQuestion();
-
-    }
-
-    else {
-
-    // Save the first 15 answers temporarily
-    localStorage.setItem(
-        "quizAnswers",
-        JSON.stringify(answers)
-    );
-
-    window.location = "/quiz/scratch";
-}
-
-}
-
-
-
-// =========================
+// ======================================================
 // PREVIOUS
-// =========================
+// ======================================================
 
-document.getElementById("prevBtn").onclick=function(){
+prevBtn.addEventListener("click", () => {
 
-    if(currentQuestion>0){
+    saveAnswer();
+
+    if (currentQuestion > 0) {
 
         currentQuestion--;
 
@@ -245,42 +376,11 @@ document.getElementById("prevBtn").onclick=function(){
 
     }
 
-}
+});
 
 
+// ======================================================
+// INITIALIZE
+// ======================================================
 
-// =========================
-// SUBMIT
-// =========================
-
-function submitQuiz(){
-
-    clearInterval(interval);
-
-    fetch("/quiz/submit",{
-
-        method:"POST",
-
-        headers:{
-
-            "Content-Type":"application/json"
-
-        },
-
-        body:JSON.stringify({
-
-            answers:answers
-
-        })
-
-    })
-
-    .then(res=>res.json())
-
-    .then(data=>{
-
-        window.location="/quiz/result";
-
-    });
-
-}
+renderQuestion();
